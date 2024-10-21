@@ -1,4 +1,4 @@
-package br.com.api.ecommerce.Entity;
+package br.com.api.ecommerce.entity;
 
 import org.hibernate.validator.constraints.br.CPF;
 
