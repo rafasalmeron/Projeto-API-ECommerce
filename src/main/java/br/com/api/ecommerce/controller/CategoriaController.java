@@ -1,8 +1,9 @@
 package br.com.api.ecommerce.controller;
 
-import br.com.api.ecommerce.Repository.CategoriaRepository;
-import br.com.api.ecommerce.Service.CategoriaService;
 import br.com.api.ecommerce.entity.Categoria;
+import br.com.api.ecommerce.repository.CategoriaRepository;
+import br.com.api.ecommerce.service.CategoriaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

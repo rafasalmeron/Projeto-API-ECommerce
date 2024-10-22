@@ -2,6 +2,9 @@ package br.com.api.ecommerce.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Entity
@@ -13,6 +16,7 @@ public class Categoria {
 	private Long id;
 	
 	@Schema(description = "nome categoria")
+	@NotBlank
 	private String nome;
 	
 	@OneToMany

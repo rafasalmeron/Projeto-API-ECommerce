@@ -1,8 +1,8 @@
-package br.com.api.ecommerce.Service;
+package br.com.api.ecommerce.service;
 
 import org.springframework.stereotype.Service;
 
-import br.com.api.ecommerce.Repository.PedidoRepository;
+import br.com.api.ecommerce.repository.PedidoRepository;
 
 @Service
 public class PedidoService {

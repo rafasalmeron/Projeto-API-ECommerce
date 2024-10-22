@@ -1,9 +1,11 @@
-package br.com.api.ecommerce.Service;
+package br.com.api.ecommerce.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.api.ecommerce.Repository.CategoriaRepository;
+
 import br.com.api.ecommerce.entity.Categoria;
+import br.com.api.ecommerce.repository.CategoriaRepository;
+
 import java.util.List;
 import java.util.Optional;
 

@@ -1,9 +1,10 @@
-package br.com.api.ecommerce.Service;
+package br.com.api.ecommerce.service;
 
-import br.com.api.ecommerce.Repository.CategoriaRepository;
-import br.com.api.ecommerce.Repository.ProdutoRepository;
 import br.com.api.ecommerce.entity.Categoria;
 import br.com.api.ecommerce.entity.Produto;
+import br.com.api.ecommerce.repository.CategoriaRepository;
+import br.com.api.ecommerce.repository.ProdutoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

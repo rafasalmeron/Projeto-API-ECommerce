@@ -1,7 +1,7 @@
 package br.com.api.ecommerce.controller;
 
-import br.com.api.ecommerce.Service.ProdutoService;
 import br.com.api.ecommerce.entity.Produto;
+import br.com.api.ecommerce.service.ProdutoService;
 import br.com.api.ecommerce.entity.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
