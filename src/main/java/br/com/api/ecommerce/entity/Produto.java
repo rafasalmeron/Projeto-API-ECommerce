@@ -14,43 +14,21 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Schema(description = "Nome do produto")
-	private String nomeProduto;
+
+    @Schema(description = "Nome do produto")
+	private String nome;
 	
 	@ManyToOne
 	@JoinColumn(name ="id_categoria")
 	private Categoria categoria;
-	
-	
 
-	public Produto(Long id, String nomeProduto, Categoria categoria) {
-		super();
-		this.id = id;
-		this.nomeProduto = nomeProduto;
-		this.categoria = categoria;
-	}
-	
 	public Produto() {
-
-		
 	}
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
+	public Produto(Long id, String nome, Categoria categoria) {
 		this.id = id;
-	}
-
-	public String getNomeProduto() {
-		return nomeProduto;
-	}
-
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
+		this.nome = nome;
+		this.categoria = categoria;
 	}
 
 	public Categoria getCategoria() {
@@ -60,7 +38,20 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
-	
-	
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

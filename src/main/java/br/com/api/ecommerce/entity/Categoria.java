@@ -1,12 +1,8 @@
 package br.com.api.ecommerce.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Categoria {
@@ -17,20 +13,18 @@ public class Categoria {
 	private Long id;
 	
 	@Schema(description = "nome categoria")
-	private String nomeCategoria;
+	private String nome;
 	
 	@OneToMany
 	@JoinColumn(name = "id_produto")
-	private Produto produto;
+	private List<Produto> produto;
 	
 	public Categoria() {
-		
 	}
+
 	public Categoria(Long id, String nomeCategoria, Produto produto) {
-		super();
 		this.id = id;
-		this.nomeCategoria = nomeCategoria;
-		this.produto = produto;
+		this.nome = nomeCategoria;
 	}
 
 	public Long getId() {
@@ -41,24 +35,19 @@ public class Categoria {
 		this.id = id;
 	}
 
-	public String getNomeCategoria() {
-		return nomeCategoria;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeCategoria(String nomeCategoria) {
-		this.nomeCategoria = nomeCategoria;
+	public void setNome(String nomeCategoria) {
+		this.nome = nomeCategoria;
 	}
 
-	public Produto getProduto() {
+	public List<Produto> getProduto() {
 		return produto;
 	}
 
-	public void setProduto(Produto produto) {
+	public void setProduto(List<Produto> produto) {
 		this.produto = produto;
 	}
-
-	
-	
-	
-
 }
