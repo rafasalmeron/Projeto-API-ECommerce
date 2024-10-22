@@ -1,5 +1,7 @@
 package br.com.api.ecommerce.entity;
 
+import java.util.Objects;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
@@ -9,9 +11,7 @@ public class ProdutoPedido {
 	@EmbeddedId
 	private ProdutoPedidoPK id = new ProdutoPedidoPK();
 	
-	private Double valorVenda;
-	private Double desconto;
-	private Integer quantidade;
+	
 	
 	public ProdutoPedidoPK getId() {
 		return id;
@@ -19,24 +19,22 @@ public class ProdutoPedido {
 	public void setId(ProdutoPedidoPK id) {
 		this.id = id;
 	}
-	public Double getValorVenda() {
-		return valorVenda;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
-	public void setValorVenda(Double valorVenda) {
-		this.valorVenda = valorVenda;
-	}
-	public Double getDesconto() {
-		return desconto;
-	}
-	public void setDesconto(Double desconto) {
-		this.desconto = desconto;
-	}
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProdutoPedido other = (ProdutoPedido) obj;
+		return Objects.equals(id, other.id);
+	}	
+	
 	
 	
 }

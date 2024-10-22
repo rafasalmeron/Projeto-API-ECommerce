@@ -30,4 +30,6 @@ public class Cliente {
 	@Schema(description = "Email do cliente")
 	private String email;
 	
+	
+	
 }
