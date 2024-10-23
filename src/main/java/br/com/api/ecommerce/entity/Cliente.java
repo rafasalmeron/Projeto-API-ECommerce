@@ -30,7 +30,5 @@ public class Cliente {
 	@Schema(description = "Email do cliente")
 	@NotBlank(message = "Por favor insira um email")
 	private String email;
-	
-	
-	
+
 }
