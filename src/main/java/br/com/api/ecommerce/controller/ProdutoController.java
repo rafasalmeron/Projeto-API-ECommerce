@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ProdutoController {
 
     private final ProdutoService produtoService;
@@ -45,11 +44,14 @@ public class ProdutoController {
     public ResponseEntity<?> criarProduto(@RequestBody Produto produto) {
         try {
             Produto novoProduto = produtoService.criarProduto(produto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novoProduto);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(novoProduto);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar produto: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao criar produto: " + e.getMessage());
         }
     }
 
@@ -57,7 +59,8 @@ public class ProdutoController {
     public ResponseEntity<List<Produto>> criarVariosProdutos(@RequestBody List<Produto> produtos) {
         try {
             List<Produto> novosProdutos = produtoService.criarVariosProdutos(produtos);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novosProdutos);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(novosProdutos);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (ResponseStatusException e) {
@@ -75,5 +78,11 @@ public class ProdutoController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+        produtoService.deletarProduto(id);
+        return ResponseEntity.noContent().build();
     }
 }
