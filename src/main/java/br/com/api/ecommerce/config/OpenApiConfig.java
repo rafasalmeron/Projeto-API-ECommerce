@@ -9,7 +9,7 @@ import org.springframework.web.method.HandlerMethod;
 
 @Configuration
 public class OpenApiConfig {
-
+//teste
     @Bean
     public OperationCustomizer customGlobalResponses() {
         return (Operation operation, HandlerMethod handlerMethod) -> {
