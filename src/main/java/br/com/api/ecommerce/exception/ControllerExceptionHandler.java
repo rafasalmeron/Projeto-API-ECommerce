@@ -45,9 +45,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		ErroResposta erroResposta = new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(),
 				"Exitem campos inválidos",
 				LocalDateTime.now(), erros);
-
 		return ResponseEntity.unprocessableEntity().body(erroResposta);
-
 	}
 
 }
