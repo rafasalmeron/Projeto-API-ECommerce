@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 public class Cliente {
@@ -18,6 +17,7 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
 	
@@ -83,10 +83,7 @@ public class Cliente {
 
 	public void setCep(String cep) {
 		this.cep = cep;
-	}
-	
-	
-	
+	}	
 	
 	
 }

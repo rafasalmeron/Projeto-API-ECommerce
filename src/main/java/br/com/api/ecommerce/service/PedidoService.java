@@ -6,5 +6,7 @@ import br.com.api.ecommerce.repository.PedidoRepository;
 
 @Service
 public class PedidoService {
+
 	private PedidoRepository pedidorepository;
+
 }
