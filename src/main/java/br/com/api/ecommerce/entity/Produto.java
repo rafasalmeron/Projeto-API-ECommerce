@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Produto {
@@ -16,10 +17,12 @@ public class Produto {
 	private Long id;
 
     @Schema(description = "Nome do produto")
+    @NotBlank
 	private String nome;
 	
 	@ManyToOne
 	@JoinColumn(name ="id_categoria")
+	@NotBlank
 	private Categoria categoria;
 
 	public Produto() {
