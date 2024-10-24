@@ -32,7 +32,6 @@ public class ProdutoController {
         return ResponseEntity.ok(produtosPaginados);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoDTO> getProduto(@PathVariable Long id) {
         Optional<Produto> produtoOptional = produtoService.buscarPorId(id);
@@ -56,8 +55,6 @@ public class ProdutoController {
             return ResponseEntity.ok(produtos);
         }
     }
-
-
 
     @PostMapping("/criar")
     public ResponseEntity<?> criarProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
