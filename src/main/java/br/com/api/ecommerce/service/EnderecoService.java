@@ -18,7 +18,7 @@ public class EnderecoService {
 	private EnderecoRepository repository;
 
 	public EnderecoResponseDTO buscar(String cep) {
-		//cep.replaceAll("-", ""); Criticar o traços e pontos do cep
+		
 		var endereco = Optional.ofNullable(repository.findByCep(cep));
 		if (endereco.isPresent()) {
 			return new EnderecoResponseDTO(endereco.get());
