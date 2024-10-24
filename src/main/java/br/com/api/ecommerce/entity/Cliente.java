@@ -16,11 +16,9 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
-	
 	private String telefone;
 	
 	@Email
@@ -32,11 +30,8 @@ public class Cliente {
 	@NotBlank(message = "Por favor insira um CPF")
 	@CPF
 	private String cpf;
-	
 	private String cep;
 
-	
-	
 	public Long getId() {
 		return id;
 	}

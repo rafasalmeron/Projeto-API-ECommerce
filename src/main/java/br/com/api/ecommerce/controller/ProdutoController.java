@@ -17,7 +17,6 @@ import java.util.Optional;
 public class ProdutoController {
 
     private final ProdutoService produtoService;
-
     @Autowired
     public ProdutoController(ProdutoService produtoService) {
         this.produtoService = produtoService;

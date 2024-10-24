@@ -22,8 +22,7 @@ import br.com.api.ecommerce.service.ClienteService;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-	
-	 	@Autowired
+
 	    private final ClienteService clienteService;
 	    private final ClienteRepository clienteRepository;
 
