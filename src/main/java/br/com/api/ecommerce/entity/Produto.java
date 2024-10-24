@@ -19,11 +19,25 @@ public class Produto {
     @Schema(description = "Nome do produto")
     @NotBlank
 	private String nome;
+    
+    @Schema(description = "Valor do produto")
+    @NotBlank
+	private double valor;
 	
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
 	@ManyToOne
 	@JoinColumn(name ="id_categoria")
 	@NotBlank
 	private Categoria categoria;
+	
+	
 
 	public Produto() {
 	}
