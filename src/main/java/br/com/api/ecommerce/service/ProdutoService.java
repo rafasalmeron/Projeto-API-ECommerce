@@ -5,6 +5,7 @@ import br.com.api.ecommerce.entity.Produto;
 import br.com.api.ecommerce.repository.CategoriaRepository;
 import br.com.api.ecommerce.repository.ProdutoRepository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,6 +34,7 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
+    @Transactional
     public Produto criarProduto(Produto produto) {
         Categoria categoria = categoriaRepository.findById(produto.getCategoria().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
@@ -40,6 +42,7 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
+    @Transactional
     public List<Produto> criarVariosProdutos(List<Produto> produtos) {
         for (Produto produto : produtos) {
             if (produto.getCategoria() == null || produto.getCategoria().getId() == null) {

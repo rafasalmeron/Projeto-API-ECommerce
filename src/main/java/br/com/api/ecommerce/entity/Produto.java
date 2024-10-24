@@ -22,7 +22,6 @@ public class Produto {
 	
 	@ManyToOne
 	@JoinColumn(name ="id_categoria")
-	@NotBlank
 	private Categoria categoria;
 
 	public Produto() {
