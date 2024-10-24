@@ -4,12 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -23,9 +18,8 @@ public class Categoria {
 	@Schema(description = "nome categoria")
 	@NotBlank
 	private String nome;
-	
-	@OneToMany
-	@JoinColumn(name = "id_produto")
+
+	@OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
 	@JsonManagedReference
 	private List<Produto> produto;
 	
