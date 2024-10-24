@@ -27,7 +27,7 @@ public class Produto {
 	private double valor;
 
 	@ManyToOne
-	@JoinColumn(name ="id_categoria")
+	@JoinColumn(name ="id_categoria", nullable = false)
 	@JsonBackReference
 	private Categoria categoria;
 

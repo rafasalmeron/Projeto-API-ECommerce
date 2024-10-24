@@ -1,15 +1,14 @@
 package br.com.api.ecommerce.controller;
 
-import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import br.com.api.ecommerce.dto.PedidoCreateDTO;
 import br.com.api.ecommerce.dto.PedidoResponseDTO;
 import br.com.api.ecommerce.entity.Pedido;
 import br.com.api.ecommerce.service.PedidoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -23,36 +22,34 @@ public class PedidoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PedidoResponseDTO>> listarPedidos(
-            @PageableDefault(size = 10) Pageable pageable) {
-        return ResponseEntity.ok(pedidoService.listar(pageable));
+    public ResponseEntity<List<PedidoResponseDTO>> listarPedidos() {
+        return ResponseEntity.ok(pedidoService.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
-        PedidoResponseDTO pedido = pedidoService.listarById(id);
-        return ResponseEntity.ok(pedido);
+    public ResponseEntity<PedidoResponseDTO> listarPedidoPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(pedidoService.listarById(id));
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<Pedido> criarPedido(@Valid @RequestBody Pedido pedido) {
-        Pedido novoPedido = pedidoService.criarPedido(pedido);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
+    public ResponseEntity<?> criarPedido(@Valid @RequestBody PedidoCreateDTO pedidoCreateDTO) {
+        try {
+            Pedido novoPedido = pedidoService.criarPedido(pedidoCreateDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar pedido: " + e.getMessage());
+        }
     }
 
-    @PostMapping("/criar-varias")
-    public ResponseEntity<List<Pedido>> criarVariosPedidos(@RequestBody List<Pedido> pedidos) {
-        if (pedidos.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        List<Pedido> novosPedidos = pedidoService.criarVariosPedidos(pedidos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novosPedidos);
-    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> atualizarPedido(@PathVariable Long id, @Valid @RequestBody Pedido pedido) {
-        Pedido atualizado = pedidoService.atualizarPedido(id, pedido);
-        return ResponseEntity.ok(atualizado);
+    public ResponseEntity<Pedido> atualizarPedido(@PathVariable Long id, @RequestBody Pedido pedidoAtualizado) {
+        try {
+            Pedido pedido = pedidoService.atualizarPedido(id, pedidoAtualizado);
+            return ResponseEntity.ok(pedido);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")

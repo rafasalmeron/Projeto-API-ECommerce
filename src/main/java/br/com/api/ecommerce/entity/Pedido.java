@@ -1,39 +1,36 @@
 package br.com.api.ecommerce.entity;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
 public class Pedido {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "id_cliente")
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
-	@ManyToMany
-	@JoinTable(
-			name = "pedido_produto",
-			joinColumns = @JoinColumn(name = "pedido_id"),
-			inverseJoinColumns = @JoinColumn(name = "produto_id")
-	)
-	private List<Produto> produto;
-	
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<ProdutoPedido> produtosPedidos = new HashSet<>();
+
+	public Set<ProdutoPedido> getProdutosPedidos() {
+		return produtosPedidos;
+	}
+
+	public void setProdutosPedidos(Set<ProdutoPedido> produtosPedidos) {
+		this.produtosPedidos = produtosPedidos;
+	}
+
 	private LocalDate dataPedido;
-
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
 
 	public LocalDate getDataPedido() {
 		return dataPedido;
@@ -44,14 +41,12 @@ public class Pedido {
 	}
 
 	public Pedido() {
-		
+
 	}
 
-	
-	public Pedido(Long id, Cliente cliente, List<Produto> produto, LocalDate dataPedido) {
+	public Pedido(Long id, Cliente cliente, LocalDate dataPedido) {
 		this.id = id;
 		this.cliente = cliente;
-		this.produto = produto;
 		this.dataPedido = dataPedido;
 	}
 
@@ -76,6 +71,6 @@ public class Pedido {
 		this.cliente = cliente;
 	}
 
-	
-	
+
+
 }

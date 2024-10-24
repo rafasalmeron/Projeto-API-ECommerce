@@ -4,14 +4,28 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import br.com.api.ecommerce.entity.Pedido;
-import br.com.api.ecommerce.entity.Produto;
+import br.com.api.ecommerce.entity.ProdutoPedido;
 
 public class PedidoResponseDTO {
 
 	private Long id;
 	private String nomeCliente;
 	private Set<String> nomesProdutos = new HashSet<>();
-	private double valor;
+	private double valorTotal;
+
+	public PedidoResponseDTO() {
+	}
+
+	public PedidoResponseDTO(Pedido pedido) {
+		this.id = pedido.getId();
+		this.nomeCliente = pedido.getCliente().getNome();
+		this.valorTotal = pedido.getProdutosPedidos().stream()
+				.mapToDouble(pp -> pp.getProduto().getValor() * pp.getQuantidade())
+				.sum();
+		this.nomesProdutos = pedido.getProdutosPedidos().stream()
+				.map(pp -> pp.getProduto().getNome() + " (Quantidade: " + pp.getQuantidade() + ")")
+				.collect(Collectors.toSet());
+	}
 
 	public Long getId() {
 		return id;
@@ -37,24 +51,11 @@ public class PedidoResponseDTO {
 		this.nomesProdutos = nomesProdutos;
 	}
 
-	public double getValor() {
-		return valor;
+	public double getValorTotal() {
+		return valorTotal;
 	}
 
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-
-	public PedidoResponseDTO() {
-	}
-
-	public PedidoResponseDTO(Pedido pedido) {
-		this.id = pedido.getId();
-		this.nomeCliente = pedido.getCliente().getNome();
-		this.valor = pedido.getProduto().stream().mapToDouble(Produto::getValor).sum();
-		this.nomesProdutos = pedido.getProduto().stream()
-				.map(Produto::getNome)
-				.collect(Collectors.toSet());
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 }
-
