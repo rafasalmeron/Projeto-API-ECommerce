@@ -1,14 +1,16 @@
 package br.com.api.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -19,6 +21,7 @@ public class Cliente {
 
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
+	@Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "Telefone deve seguir o formato (XX) XXXXX-XXXX")
 	private String telefone;
 	
 	@Email
@@ -30,7 +33,23 @@ public class Cliente {
 	@NotBlank(message = "Por favor insira um CPF")
 	@CPF
 	private String cpf;
+	@Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve seguir o formato XXXXX-XXX")
 	private String cep;
+
+	@OneToMany(mappedBy = "cliente")
+	@JsonIgnore
+	private List<Pedido> pedidos;
+
+	public Cliente() {
+	}
+
+	public Cliente(String nome, String telefone, String email, String cpf, String cep) {
+		this.nome = nome;
+		this.telefone = telefone;
+		this.email = email;
+		this.cpf = cpf;
+		this.cep = cep;
+	}
 
 	public Long getId() {
 		return id;

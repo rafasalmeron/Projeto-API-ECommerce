@@ -5,7 +5,9 @@ import java.util.Objects;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class ProdutoPedido {
@@ -13,7 +15,8 @@ public class ProdutoPedido {
 	@EmbeddedId
 	private ProdutoPedidoPK id = new ProdutoPedidoPK();
 	
-	@NotBlank
+	@NotNull
+	@Min(1)
 	@Schema(description = "Quatidade do item")
 	private Long quantidade;
 	

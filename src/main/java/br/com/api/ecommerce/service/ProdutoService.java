@@ -1,15 +1,14 @@
 package br.com.api.ecommerce.service;
 
+import br.com.api.ecommerce.dto.ProdutoDTO;
 import br.com.api.ecommerce.entity.Categoria;
 import br.com.api.ecommerce.entity.Produto;
 import br.com.api.ecommerce.repository.CategoriaRepository;
 import br.com.api.ecommerce.repository.ProdutoRepository;
-
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,51 +25,82 @@ public class ProdutoService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public List<Produto> listarTodos() {
-        return produtoRepository.findAll();
+    public List<ProdutoDTO> buscarPorCategoria(Long categoriaId) {
+        List<Produto> produtos = produtoRepository.findByCategoriaId(categoriaId);
+
+        // Converter Produto para ProdutoDTO
+        return produtos.stream()
+                .map(produto -> new ProdutoDTO(
+                        produto.getId(),
+                        produto.getNome(),
+                        produto.getValor(),
+                        produto.getCategoria().getId()
+                ))
+                .toList();
     }
+
+    public Page<ProdutoDTO> listarTodos(Pageable pageable) {
+        Page<Produto> produtos = produtoRepository.findAll(pageable);
+
+        return produtos.map(produto -> new ProdutoDTO(
+                produto.getId(),
+                produto.getNome(),
+                produto.getValor(),
+                produto.getCategoria().getId()
+        ));
+    }
+
 
     public Optional<Produto> buscarPorId(Long id) {
         return produtoRepository.findById(id);
     }
 
-    @Transactional
-    public Produto criarProduto(Produto produto) {
-        Categoria categoria = categoriaRepository.findById(produto.getCategoria().getId())
+    public Produto criarProduto(ProdutoDTO produtoDTO) {
+        // Converter ProdutoDTO em Produto
+        Categoria categoria = categoriaRepository.findById(produtoDTO.getCategoriaId())
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+
+        Produto produto = new Produto();
+        produto.setNome(produtoDTO.getNome());
+        produto.setValor(produtoDTO.getValor());
         produto.setCategoria(categoria);
+
         return produtoRepository.save(produto);
     }
 
-    @Transactional
-    public List<Produto> criarVariosProdutos(List<Produto> produtos) {
-        for (Produto produto : produtos) {
-            if (produto.getCategoria() == null || produto.getCategoria().getId() == null) {
-                throw new IllegalArgumentException("ID da categoria não pode ser nulo");
-            }
+    public List<Produto> criarVariosProdutos(List<ProdutoDTO> produtosDTO) {
+        List<Produto> produtos = produtosDTO.stream().map(produtoDTO -> {
+            Categoria categoria = categoriaRepository.findById(produtoDTO.getCategoriaId())
+                    .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
 
-            Categoria categoria = categoriaRepository.findById(produto.getCategoria().getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada"));
-
+            Produto produto = new Produto();
+            produto.setNome(produtoDTO.getNome());
+            produto.setValor(produtoDTO.getValor());
             produto.setCategoria(categoria);
-        }
+
+            return produto;
+        }).toList();
 
         return produtoRepository.saveAll(produtos);
     }
 
-    public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
+    public Produto atualizarProduto(Long id, ProdutoDTO produtoDTO) {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
 
-        produto.setNome(produtoAtualizado.getNome());
-        Categoria categoria = categoriaRepository.findById(produtoAtualizado.getCategoria().getId())
+        Categoria categoria = categoriaRepository.findById(produtoDTO.getCategoriaId())
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+
+        produto.setNome(produtoDTO.getNome());
+        produto.setValor(produtoDTO.getValor());
         produto.setCategoria(categoria);
 
         return produtoRepository.save(produto);
     }
 
     public void deletarProduto(Long id) {
-        categoriaRepository.deleteById(id);
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+        produtoRepository.delete(produto);
     }
 }

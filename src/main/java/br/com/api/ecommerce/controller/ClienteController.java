@@ -2,6 +2,7 @@ package br.com.api.ecommerce.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +44,8 @@ public class ClienteController {
 	                .orElse(ResponseEntity.notFound().build());
 	    }
 
-	    @PostMapping("/criar")
-	    public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
+	@PostMapping(value = "/criar", consumes = "application/json", produces = "application/json")
+	    public ResponseEntity<Cliente> criarCliente(@Valid @RequestBody Cliente cliente) {
 	        return ResponseEntity.ok(clienteService.criarCliente(cliente));
 	    }
 

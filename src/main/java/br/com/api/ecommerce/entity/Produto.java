@@ -1,5 +1,6 @@
 package br.com.api.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Produto {
@@ -21,22 +23,13 @@ public class Produto {
 	private String nome;
     
     @Schema(description = "Valor do produto")
-    @NotBlank
+    @NotNull
 	private double valor;
-	
-	public double getValor() {
-		return valor;
-	}
-
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
 
 	@ManyToOne
 	@JoinColumn(name ="id_categoria")
+	@JsonBackReference
 	private Categoria categoria;
-	
-	
 
 	public Produto() {
 	}
@@ -45,6 +38,14 @@ public class Produto {
 		this.id = id;
 		this.nome = nome;
 		this.categoria = categoria;
+	}
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 
 	public Categoria getCategoria() {
