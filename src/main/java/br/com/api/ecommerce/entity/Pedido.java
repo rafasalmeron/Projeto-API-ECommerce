@@ -3,14 +3,8 @@ package br.com.api.ecommerce.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
 @Entity
 public class Pedido {
@@ -22,15 +16,22 @@ public class Pedido {
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	
+
 	@ManyToMany
-	@JoinColumn(name = "id_produto")
+	@JoinTable(
+			name = "pedido_produto",
+			joinColumns = @JoinColumn(name = "pedido_id"),
+			inverseJoinColumns = @JoinColumn(name = "produto_id")
+	)
 	private List<Produto> produto;
 	
 	private LocalDate dataPedido;
-	
-	
-    public void setProduto(List<Produto> produto) {
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
 		this.produto = produto;
 	}
 

@@ -2,6 +2,7 @@ package br.com.api.ecommerce.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Categoria {
 	
 	@OneToMany
 	@JoinColumn(name = "id_produto")
+	@JsonManagedReference
 	private List<Produto> produto;
 	
 	public Categoria() {

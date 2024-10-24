@@ -32,7 +32,7 @@ public class ClienteService {
 	 
 	 public Cliente atualizarCliente(Long id, Cliente clienteAtualizado) {
 	        Cliente cliente = clienteRepository.findById(id)
-	                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+	                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrada"));
 	        cliente.setNome(clienteAtualizado.getNome());
 	        cliente.setTelefone(clienteAtualizado.getTelefone());
 	        cliente.setEmail(clienteAtualizado.getEmail());
