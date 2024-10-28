@@ -61,7 +61,7 @@ public class ClienteController {
 	        clienteService.deletarCliente(id);
 	        return ResponseEntity.noContent().build();
 	    }
-	    @PostMapping
+	    @PostMapping("/criar")
 		public ResponseEntity<Object> inserir(@RequestPart ClienteRequestDTO dto)throws IOException {
 			ClienteResponseDTO dtoResponse = clienteService.inserir(dto);
 			return ResponseEntity.created(null).body(dtoResponse);
