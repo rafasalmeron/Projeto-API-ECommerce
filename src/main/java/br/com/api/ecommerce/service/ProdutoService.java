@@ -3,7 +3,9 @@ package br.com.api.ecommerce.service;
 import br.com.api.ecommerce.dto.ProdutoDTO;
 import br.com.api.ecommerce.entity.Categoria;
 import br.com.api.ecommerce.entity.Produto;
+import br.com.api.ecommerce.entity.ProdutoPedido;
 import br.com.api.ecommerce.repository.CategoriaRepository;
+import br.com.api.ecommerce.repository.ProdutoPedidoRepository;
 import br.com.api.ecommerce.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +20,13 @@ public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
     private final CategoriaRepository categoriaRepository;
+    private final ProdutoPedidoRepository produtoPedidoRepository;
 
     @Autowired
-    public ProdutoService(ProdutoRepository produtoRepository, CategoriaRepository categoriaRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, CategoriaRepository categoriaRepository, ProdutoPedidoRepository produtoPedidoRepository) {
         this.produtoRepository = produtoRepository;
         this.categoriaRepository = categoriaRepository;
+        this.produtoPedidoRepository = produtoPedidoRepository;
     }
 
     public List<ProdutoDTO> buscarPorCategoria(Long categoriaId) {
@@ -98,9 +102,11 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public void deletarProduto(Long id) {
-        Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
-        produtoRepository.delete(produto);
+    public void deletarProduto(Long produtoId) {
+        List<ProdutoPedido> produtoPedidos = produtoPedidoRepository.findByProdutoId(produtoId);
+        produtoPedidoRepository.deleteAll(produtoPedidos);
+
+        produtoRepository.deleteById(produtoId);
     }
+
 }

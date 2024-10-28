@@ -3,7 +3,8 @@
 Este projeto é uma API de E-commerce desenvolvida em Java com Spring Boot, com o objetivo de criar um sistema para a venda de produtos pela internet. O projeto foi desenvolvido em duas partes: uma em grupo e uma individual, cada aluno sendo responsável por adicionar funcionalidades relevantes.
 
 - **Link** para o repositório do FrontEnd da aplicação: https://github.com/rafasalmeron/FrontEnd-Projeto-API-ECommerce
-
+- **Deploy** basta rodar este projeto e garantir que abra na porta localhost:9090 e o deploy se conectará com o backend.
+- **Link do Deploy** https://front-end-projeto-api-e-commerce-pveh9ccvn.vercel.app/
 ## Funcionalidades
 
 - **Categoria**: Inserção e edição de categorias de produtos.

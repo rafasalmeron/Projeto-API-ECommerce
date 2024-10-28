@@ -127,7 +127,7 @@ public class ClienteService {
 
 	 
 	    public void deletarCliente(Long id) {
-	        clienteRepository.deleteById(id);
+		clienteRepository.deleteById(id);
 	    }
 	 
 
