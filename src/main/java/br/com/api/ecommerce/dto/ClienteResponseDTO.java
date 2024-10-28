@@ -1,5 +1,7 @@
 package br.com.api.ecommerce.dto;
 
+import br.com.api.ecommerce.entity.Cliente;
+
 public class ClienteResponseDTO {
 	
 	private String nome;
@@ -8,10 +10,9 @@ public class ClienteResponseDTO {
 	public ClienteResponseDTO(){
 	}
 
-	public ClienteResponseDTO(String nome, String email) {
-		super();
-		this.nome = nome;
-		this.email = email;
+	public ClienteResponseDTO(Cliente cliente) {
+		this.nome = cliente.getNome();
+		this.email = cliente.getEmail();
 	}
 
 	public String getNome() {

@@ -1,8 +1,8 @@
 package br.com.api.ecommerce.controller;
 
+import java.io.IOException;
 import java.util.List;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,50 +13,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.api.ecommerce.dto.ClienteRequestDTO;
+import br.com.api.ecommerce.dto.ClienteResponseDTO;
 import br.com.api.ecommerce.entity.Cliente;
 import br.com.api.ecommerce.repository.ClienteRepository;
 import br.com.api.ecommerce.service.ClienteService;
+import jakarta.validation.Valid;
 
 
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
+		@Autowired
+	    private  ClienteService clienteService;
+		@Autowired
+	    private  ClienteRepository clienteRepository;
 
-	    private final ClienteService clienteService;
-	    private final ClienteRepository clienteRepository;
-
-	    public ClienteController(ClienteService clienteService, ClienteRepository clienteRepository) {
-	        this.clienteService = clienteService;
-	        this.clienteRepository = clienteRepository;
-	    }
+	  
 
 	    @GetMapping
-	    public ResponseEntity<List<Cliente>> listarClientes() {
+	    public ResponseEntity<List<ClienteResponseDTO>> listarClientes() {
 	        return ResponseEntity.ok(clienteService.listarClientes());
 	    }
 
-	    @GetMapping("/{id}")
-	    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
-	        return clienteService.buscarPorId(id)
-	                .map(ResponseEntity::ok)
-	                .orElse(ResponseEntity.notFound().build());
-	    }
 
-	@PostMapping(value = "/criar", consumes = "application/json", produces = "application/json")
-	    public ResponseEntity<Cliente> criarCliente(@Valid @RequestBody Cliente cliente) {
-	        return ResponseEntity.ok(clienteService.criarCliente(cliente));
-	    }
-
-	    @PostMapping("/criar-varias")
-	    public ResponseEntity<List<Cliente>> criarVariasClientes(@RequestBody List<Cliente> clientes) {
-	        List<Cliente> novasClientes = clienteRepository.saveAll(clientes);
+	    /*@PostMapping("/criar-varias")
+	    public ResponseEntity<List<ClienteResponseDTO>> criarVariasClientes(@RequestBody List<ClienteResponseDTO> clientes) {
+	        List<ClienteResponseDTO> novasClientes = clienteRepository.saveAll(clientes);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(novasClientes);
-	    }
+	    }*/
 
 	    @PutMapping("/{id}")
-	    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizada) {
+	    public ResponseEntity<ClienteResponseDTO> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizada) {
 	        try {
 	            return ResponseEntity.ok(clienteService.atualizarCliente(id, clienteAtualizada));
 	        } catch (IllegalArgumentException e) {
@@ -69,5 +61,16 @@ public class ClienteController {
 	        clienteService.deletarCliente(id);
 	        return ResponseEntity.noContent().build();
 	    }
+	    @PostMapping("/criar")
+		public ResponseEntity<Object> inserir(@RequestPart ClienteRequestDTO dto)throws IOException {
+			ClienteResponseDTO dtoResponse = clienteService.inserir(dto);
+			return ResponseEntity.created(null).body(dtoResponse);
+		}
+		
+		@GetMapping("{id}")
+		public  ResponseEntity<ClienteResponseDTO> buscarPorId(@PathVariable Long id){
+			return ResponseEntity.ok(clienteService.buscarPorId(id));
+		}
+
 
 }
