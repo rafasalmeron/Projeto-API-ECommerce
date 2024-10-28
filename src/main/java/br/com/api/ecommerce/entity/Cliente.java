@@ -38,6 +38,10 @@ public class Cliente {
 	@OneToMany(mappedBy = "cliente")
 	@JsonIgnore
 	private List<Pedido> pedidos;
+	
+	@ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
 
 	public Cliente() {
 	}
@@ -60,6 +64,22 @@ public class Cliente {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public void setNome(String nome) {
