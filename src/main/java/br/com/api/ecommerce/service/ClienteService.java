@@ -61,7 +61,8 @@ public class ClienteService {
 			Cliente cliente = new Cliente();
 			cliente.setNome(dto.getNome());
 			cliente.setEmail(dto.getEmail());
-			
+			cliente.setCpf(dto.getCpf());
+			cliente.setCep(dto.getCep());
 
 			Endereco endereco = enderecoRepository.findByCep(dto.getCep());
 			if (endereco != null) {
@@ -69,24 +70,33 @@ public class ClienteService {
 			} else {
 				RestTemplate rs = new RestTemplate();
 				String uri = "https://viacep.com.br/ws/" + dto.getCep() + "/json/";
-				Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(uri, Endereco.class));
-				if (enderecoViaCep.get().getCep() != null) {
-					String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
-					enderecoViaCep.get().setCep(cepSemTraco);
-					endereco = new Endereco();
-					endereco.setCep(enderecoViaCep.get().getCep());
-					endereco.setBairro(enderecoViaCep.get().getBairro());
-					endereco.setLocalidade(enderecoViaCep.get().getLocalidade());
-					endereco.setLogradouro(enderecoViaCep.get().getUf());
-					enderecoRepository.save(endereco);
-				} else {
-					throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-				}
 
+				try {
+					Endereco enderecoViaCep = rs.getForObject(uri, Endereco.class);
+
+					if (enderecoViaCep != null && enderecoViaCep.getCep() != null) {
+						String cepSemTraco = enderecoViaCep.getCep().replaceAll("-", "");
+						enderecoViaCep.setCep(cepSemTraco);
+
+						endereco = new Endereco();
+						endereco.setCep(enderecoViaCep.getCep());
+						endereco.setBairro(enderecoViaCep.getBairro());
+						endereco.setLocalidade(enderecoViaCep.getLocalidade());
+						endereco.setLogradouro(enderecoViaCep.getLogradouro());
+
+						enderecoRepository.save(endereco);
+						cliente.setEndereco(endereco);
+					} else {
+						throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "CEP não encontrado");
+					}
+				} catch (HttpClientErrorException e) {
+					throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Erro ao buscar CEP: " + dto.getCep());
+				}
 			}
-			 cliente = clienteRepository.save(cliente);
-			 return new ClienteResponseDTO(cliente); 
-	 }
+
+			cliente = clienteRepository.save(cliente);
+			return new ClienteResponseDTO(cliente);
+		}
 	 
 	 
 	 public ClienteResponseDTO atualizarCliente(Long id, Cliente clienteAtualizado) {

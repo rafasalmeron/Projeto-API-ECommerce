@@ -62,9 +62,9 @@ public class ClienteController {
 	        return ResponseEntity.noContent().build();
 	    }
 	    @PostMapping("/criar")
-		public ResponseEntity<Object> inserir(@RequestPart ClienteRequestDTO dto)throws IOException {
+		public ResponseEntity<Object> inserir(@RequestBody ClienteRequestDTO dto) throws IOException {
 			ClienteResponseDTO dtoResponse = clienteService.inserir(dto);
-			return ResponseEntity.created(null).body(dtoResponse);
+			return ResponseEntity.status(HttpStatus.CREATED).body(dtoResponse);
 		}
 		
 		@GetMapping("{id}")
