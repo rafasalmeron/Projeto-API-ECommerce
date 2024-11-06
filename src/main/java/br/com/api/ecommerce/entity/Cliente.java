@@ -1,8 +1,8 @@
 package br.com.api.ecommerce.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -28,11 +28,16 @@ public class Cliente {
 	@Schema(description = "Email do cliente")
 	@NotBlank(message = "Email obrigatório")
 	private String email;
-	
+
+	@NotBlank(message = "Senha obrigatória")
+	@Min(value = 6, message = "Senha deve ter no mínimo 6 caracteres")
+	private String senha;
+
 	@Schema(description = "CPF do cliente")
 	@NotBlank(message = "Por favor insira um CPF")
 	@CPF
 	private String cpf;
+
 	@Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve seguir o formato XXXXX-XXX")
 	private String cep;
 
@@ -43,12 +48,13 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(String nome, String telefone, String email, String cpf, String cep) {
+	public Cliente(String nome, String telefone, String email, String cpf, String cep, String senha) {
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
 		this.cpf = cpf;
 		this.cep = cep;
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -97,7 +103,14 @@ public class Cliente {
 
 	public void setCep(String cep) {
 		this.cep = cep;
-	}	
-	
+	}
+
+	public @NotBlank(message = "Senha obrigatória") @Min(value = 6, message = "Senha deve ter no mínimo 6 caracteres") String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 	
 }

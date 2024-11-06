@@ -38,6 +38,7 @@ public class ClienteService {
 	        cliente.setEmail(clienteAtualizado.getEmail());
 	        cliente.setCpf(clienteAtualizado.getCpf());
 	        cliente.setCep(clienteAtualizado.getCep());
+			cliente.setSenha(clienteAtualizado.getSenha());
 	        return clienteRepository.save(cliente);
 	 }
 	 

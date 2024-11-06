@@ -32,7 +32,6 @@ public class ProdutoService {
     public List<ProdutoDTO> buscarPorCategoria(Long categoriaId) {
         List<Produto> produtos = produtoRepository.findByCategoriaId(categoriaId);
 
-        // Converter Produto para ProdutoDTO
         return produtos.stream()
                 .map(produto -> new ProdutoDTO(
                         produto.getId(),
@@ -60,7 +59,6 @@ public class ProdutoService {
     }
 
     public Produto criarProduto(ProdutoDTO produtoDTO) {
-        // Converter ProdutoDTO em Produto
         Categoria categoria = categoriaRepository.findById(produtoDTO.getCategoriaId())
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
 
