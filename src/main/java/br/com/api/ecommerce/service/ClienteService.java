@@ -98,8 +98,7 @@ public class ClienteService {
 			cliente = clienteRepository.save(cliente);
 			return new ClienteResponseDTO(cliente);
 		}
-	 
-	 
+	
 	 public ClienteResponseDTO atualizarCliente(Long id, Cliente clienteAtualizado) {
 		    Cliente cliente = clienteRepository.findById(id)
 		            .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
@@ -136,11 +135,8 @@ public class ClienteService {
 		    cliente = clienteRepository.save(cliente);
 		    return new ClienteResponseDTO(cliente);
 		}
-
 	 
 	    public void deletarCliente(Long id) {
 		clienteRepository.deleteById(id);
 	    }
-	 
-
 }
