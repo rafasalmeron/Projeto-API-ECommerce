@@ -8,17 +8,18 @@ import br.com.api.ecommerce.entity.Cliente;
 public class ClienteRequestDTO {
 	
 	private String nome;
-    private String telefone;
-    private String email;
-    private String cpf;
-    private String cep;
+    	private String telefone;
+    	private String email;
+    	private String cpf;
+    	private String cep;
+	private String senha;
     
     private Set<Cliente> cliente = new HashSet<>();
 
 	public ClienteRequestDTO() {
 	}
 
-	public ClienteRequestDTO(String nome, String telefone, String email, String cpf, String cep, Set<Cliente> cliente) {
+	public ClienteRequestDTO(String nome, String telefone, String email, String cpf, String cep, Set<Cliente> cliente, String senha) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
@@ -26,8 +27,17 @@ public class ClienteRequestDTO {
 		this.cpf = cpf;
 		this.cep = cep;
 		this.cliente = cliente;
+		this.senha = senha;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setNome(String senha) {
+		this.senha = senha;
+	}
+	
 	public String getNome() {
 		return nome;
 	}

@@ -41,9 +41,15 @@ public class Cliente {
 	@Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve seguir o formato XXXXX-XXX")
 	private String cep;
 
+	private String senha;
+
 	@OneToMany(mappedBy = "cliente")
 	@JsonIgnore
 	private List<Pedido> pedidos;
+	
+	@ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
 
 	public Cliente() {
 	}
@@ -64,9 +70,32 @@ public class Cliente {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public Long getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	public String getNome() {
 		return nome;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public void setNome(String nome) {

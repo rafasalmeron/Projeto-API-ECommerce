@@ -1,17 +1,20 @@
 package br.com.api.ecommerce.dto;
 
+import br.com.api.ecommerce.entity.Cliente;
+
 public class ClienteResponseDTO {
 	
 	private String nome;
 	private String email;
+	private String senha;
 	
 	public ClienteResponseDTO(){
 	}
 
-	public ClienteResponseDTO(String nome, String email) {
-		super();
-		this.nome = nome;
-		this.email = email;
+	public ClienteResponseDTO(Cliente cliente) {
+		this.nome = cliente.getNome();
+		this.email = cliente.getEmail();
+		this.senha = cliente.getSenha();
 	}
 
 	public String getNome() {
@@ -29,7 +32,10 @@ public class ClienteResponseDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public void getSenha() {
+		return senha;
+	}
 }
