@@ -63,6 +63,7 @@ public class ClienteService {
 			cliente.setEmail(dto.getEmail());
 			cliente.setCpf(dto.getCpf());
 			cliente.setCep(dto.getCep());
+			cliente.setSenha(dto.getSenha());
 
 			Endereco endereco = enderecoRepository.findByCep(dto.getCep());
 			if (endereco != null) {
@@ -107,6 +108,7 @@ public class ClienteService {
 		    cliente.setTelefone(clienteAtualizado.getTelefone());
 		    cliente.setEmail(clienteAtualizado.getEmail());
 		    cliente.setCpf(clienteAtualizado.getCpf());
+		 cliente.setSenha(clienteAtualizado.getSenha());
 
 		    Endereco endereco = enderecoRepository.findByCep(clienteAtualizado.getCep());
 		    if (endereco == null) {
