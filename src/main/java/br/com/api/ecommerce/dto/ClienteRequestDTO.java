@@ -12,7 +12,7 @@ public class ClienteRequestDTO {
     	private String email;
     	private String cpf;
     	private String cep;
-	private String senha;
+		private String senha;
     
     private Set<Cliente> cliente = new HashSet<>();
 
@@ -34,7 +34,7 @@ public class ClienteRequestDTO {
 		return senha;
 	}
 
-	public void setNome(String senha) {
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 	
@@ -85,7 +85,5 @@ public class ClienteRequestDTO {
 	public void setCliente(Set<Cliente> cliente) {
 		this.cliente = cliente;
 	}
-	
-	
 
 }

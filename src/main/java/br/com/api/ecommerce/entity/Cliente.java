@@ -41,8 +41,6 @@ public class Cliente {
 	@Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve seguir o formato XXXXX-XXX")
 	private String cep;
 
-	private String senha;
-
 	@OneToMany(mappedBy = "cliente")
 	@JsonIgnore
 	private List<Pedido> pedidos;
@@ -69,9 +67,6 @@ public class Cliente {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Long getSenha() {
-		return senha;
 	}
 
 	public void setSenha(String senha) {
@@ -138,8 +133,4 @@ public class Cliente {
 		return senha;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
 }
